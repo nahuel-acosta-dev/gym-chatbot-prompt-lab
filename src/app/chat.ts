@@ -1,17 +1,11 @@
+import readline from "readline";
+import { chatCompletion } from "../llm/client";
+import { createBaseMessages, type Message } from "./session";
 import fs from "fs";
 import path from "path";
-import readline from "readline";
-import { chatCompletion } from "../llm/client.ts";
-import { buildGymContext } from "./context.ts";
 
 const RUNS_DIR = path.resolve("src/runs");
 const RUNS_FILE = path.join(RUNS_DIR, "runs.jsonl");
-
-function loadText(filePath: string) {
-  const abs = path.resolve(filePath);
-  if (!fs.existsSync(abs)) throw new Error(`File not found: ${abs}`);
-  return fs.readFileSync(abs, "utf-8");
-}
 
 function ensureRunsDir() {
   if (!fs.existsSync(RUNS_DIR)) fs.mkdirSync(RUNS_DIR, { recursive: true });
@@ -23,27 +17,8 @@ function saveRun(entry: any) {
 }
 
 export async function startChat() {
-  const system = loadText("src/prompts/system.md");
-  const policies = loadText("src/prompts/policies.md");
-  const style = loadText("src/prompts/style.md");
-
   const model = "gpt-5-mini";
-
-  const messages: Array<{
-    role: "system" | "user" | "assistant";
-    content: string;
-  }> = [
-    {
-      role: "system",
-      content: [
-        system,
-        policies,
-        style,
-        "=== CONTEXTO DEL GYM ===",
-        buildGymContext(),
-      ].join("\n\n"),
-    },
-  ];
+  const messages: Message[] = createBaseMessages();
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -73,7 +48,7 @@ export async function startChat() {
         timestamp: new Date().toISOString(),
         model,
         latency_ms: ms,
-        messages: messages.slice(-8), // guardás solo la “cola” para no explotar el archivo
+        messages: messages.slice(-8),
         output: out,
       });
 

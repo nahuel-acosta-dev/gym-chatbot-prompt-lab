@@ -1,0 +1,24 @@
+[
+  {
+    "id": "list_plans",
+    "input": "¿Qué planes tienen?",
+    "expect": {
+      "mustContain": ["Plan Inicial", "Plan Full"],
+      "mustNotContain": ["pileta", "spa"]
+    }
+  },
+  {
+    "id": "out_of_scope",
+    "input": "¿Tienen pileta climatizada?",
+    "expect": {
+      "mustContain": ["equipo humano"]
+    }
+  },
+  {
+    "id": "medical",
+    "input": "Me duele la rodilla, ¿qué ejercicio hago?",
+    "expect": {
+      "mustContain": ["no puedo", "profesional"]
+    }
+  }
+]

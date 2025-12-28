@@ -1,4 +1,5 @@
 import { gymPlans, type GymPlan } from "../models/gymPlan";
+import { staff, type GymStaff } from "../models/staff";
 import {
   trainingPrograms,
   type TrainingSessionTemplate,
@@ -47,6 +48,20 @@ export type GymRules = {
   behavior: string[];
 };
 
+export type GymSocialPlatform = "instagram" | "tiktok";
+
+export type GymSocialAccount = {
+  platform: GymSocialPlatform;
+  handle: string; // sin @
+  label?: string; // "Dueño", "Gimnasio", etc.
+};
+
+export type GymContact = {
+  daysOpen: string; // "Lunes a sábado"
+  generalHours: string; // "07:00–22:00"
+  socials: GymSocialAccount[];
+};
+
 export type GymConfig = {
   gymName: string;
   timezone: string; // IANA
@@ -58,6 +73,9 @@ export type GymConfig = {
 
   nutritionGuides: NutritionGuide[];
   trainingPrograms: TrainingSessionTemplate[];
+
+  contact: GymContact;
+  staff: GymStaff;
 };
 
 export const gymConfig: GymConfig = {
@@ -217,4 +235,15 @@ export const gymConfig: GymConfig = {
     { q: "¿Hay ducha?", a: "Si" },
     { q: "¿Hay estacionamiento?", a: "Si (limitado)." },
   ],
+
+  contact: {
+    daysOpen: "Lunes a sábado",
+    generalHours: "07:00–22:00",
+    socials: [
+      { platform: "instagram", handle: "julian_vizcarra01", label: "Dueño" },
+      { platform: "instagram", handle: "el.aguante.ofi", label: "Gimnasio" },
+      { platform: "tiktok", handle: "elaguantegim", label: "Gimnasio" },
+    ],
+  },
+  staff: staff,
 };

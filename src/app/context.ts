@@ -7,9 +7,21 @@ function formatARS(n: number) {
 export function buildGymContext(): string {
   const lines: string[] = [];
 
-  lines.push(`GIMNASIO: ${gymConfig.gymName}`);
-  lines.push(`ZONA HORARIA: ${gymConfig.timezone}`);
-  lines.push(`MONEDA: ${gymConfig.currency}`);
+  // =========================
+  // INFO GENERAL / CONTACTO
+  // =========================
+  lines.push("INFO GENERAL:");
+  lines.push(`- Días: ${gymConfig.contact.daysOpen}`);
+  lines.push(`- Horario general: ${gymConfig.contact.generalHours}`);
+
+  if (gymConfig.contact.socials?.length) {
+    lines.push("- Redes sociales:");
+    for (const s of gymConfig.contact.socials) {
+      const label = s.label ? `${s.label}: ` : "";
+      const platform = s.platform.toUpperCase();
+      lines.push(`  - ${platform} ${label}@${s.handle}`);
+    }
+  }
   lines.push("");
 
   // =========================
@@ -188,6 +200,36 @@ export function buildGymContext(): string {
       if (t.considerations?.length) {
         lines.push(`    Consideraciones: ${t.considerations.join(" | ")}`);
       }
+    }
+  }
+
+  // =========================
+  // STAFF
+  // =========================
+  lines.push("EQUIPO / STAFF:");
+  lines.push(gymConfig.staff.teamName);
+
+  if (gymConfig.staff.notes?.length) {
+    for (const n of gymConfig.staff.notes) {
+      lines.push(`- Nota: ${n}`);
+    }
+  }
+
+  for (const m of gymConfig.staff.members) {
+    lines.push(`- ${m.name}${m.nickname ? ` (${m.nickname})` : ""}`);
+    if (m.profile) lines.push(`  Perfil: ${m.profile}`);
+
+    for (const r of m.roles) {
+      lines.push(
+        `  Rol: ${r.title}${r.schedule ? ` | Turno: ${r.schedule}` : ""}`
+      );
+      for (const resp of r.responsibilities) {
+        lines.push(`    - ${resp}`);
+      }
+    }
+
+    if (m.extra?.length) {
+      lines.push(`  Extra: ${m.extra.join(" | ")}`);
     }
   }
 
