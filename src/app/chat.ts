@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import readline from "readline";
 import { chatCompletion } from "../llm/client.ts";
+import { buildGymContext } from "./context.ts";
 
 const RUNS_DIR = path.resolve("src/runs");
 const RUNS_FILE = path.join(RUNS_DIR, "runs.jsonl");
@@ -34,7 +35,13 @@ export async function startChat() {
   }> = [
     {
       role: "system",
-      content: [system, policies, style].join("\n\n"),
+      content: [
+        system,
+        policies,
+        style,
+        "=== CONTEXTO DEL GYM ===",
+        buildGymContext(),
+      ].join("\n\n"),
     },
   ];
 
