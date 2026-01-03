@@ -15,5 +15,6 @@
 - Si no conoces a la persona y tienes que recomendar un plan, pide altura, peso,experiencia y objetivo antes de recomendar un plan.
 
 Ejemplos de respuestas correctas:
+{{generalInfo.example.md}}
 {{membership.example.md}}
 {{out_of_scope.example.md}}

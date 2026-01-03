@@ -52,7 +52,7 @@ export async function singleTurn(input: string, model = "gpt-5-mini") {
 
   const out = await chatCompletion(messages, model);
 
-  if (task === "gym_info") {
+  if (task === "generalInfo") {
     const parsed = safeParseGymInfo(out);
     return JSON.stringify(parsed, null, 2);
   }
@@ -62,6 +62,10 @@ export async function singleTurn(input: string, model = "gpt-5-mini") {
 function inferTask(input: string): TaskName {
   const text = input.toLowerCase();
 
+  console.log(text);
+
+  if (text.includes("info general") || text.includes("informacion general"))
+    return "generalInfo";
   if (text.includes("plan") || text.includes("precio")) return "membership";
   if (text.includes("rutina") || text.includes("ejercicio")) return "training";
   if (text.includes("pileta") || text.includes("tarjeta"))

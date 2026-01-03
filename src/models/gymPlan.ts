@@ -55,7 +55,7 @@ export const gymPlans: GymPlan[] = [
     priceNote: "Precio por persona",
     includes: ["Musculación", "Cardio", "Clases grupales", "Acceso ilimitado"],
     conditions:
-      "Válido para padres, hijos o hermanos con un familiar ya entrenando.",
+      "Válido para padres, hijos o hermanos con un familiar ya entrenando o que tambien planee inscribirse en el momento. Todos los miembros participes pagan este precio. Es decir si por ejemplo un padre y dos hijos se inscriben, los tres pagan este precio. Pueden entrar al plan familiar siempre que haya un miembro activo en el plan full. Automaticamente el plan se activa para los dos familiares al momento de la inscripción.",
   },
 
   {

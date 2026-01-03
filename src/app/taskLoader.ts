@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 export type TaskName =
-  | "gym_info"
+  | "generalInfo"
   | "membership"
   | "training"
   | "out_of_scope"

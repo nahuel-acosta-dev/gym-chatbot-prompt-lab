@@ -9,7 +9,7 @@ export function safeParseGymInfo(output: string): GymInfoResponse {
     throw new Error("Respuesta inválida: no es JSON");
   }
 
-  if (parsed.type !== "gym_info") {
+  if (parsed.type !== "infoGeneral") {
     throw new Error("Respuesta inválida: type incorrecto");
   }
 
